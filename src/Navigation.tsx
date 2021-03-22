@@ -133,14 +133,16 @@ type MenuItem = {
 	activeColor?: string;
 };
 
+export type MenuPosition = "left" | "right" | "top" | "bottom" | "center";
+
 type NavigationProps = {
 	menuItems?: Array<MenuItem | string>;
 	buttonColor?: string;
 	menuColor?: string;
-	menuPosition?: "left" | "right" | "top" | "bottom" | "center";
+	menuPosition?: MenuPosition;
 	flipLableVertical?: boolean;
 	flipLableHorizontal?: boolean;
-	clickOpen?: boolean;
+	clickOpenClose?: boolean;
 };
 
 const StyledMenuItem = ({
@@ -197,23 +199,22 @@ const Navigation = ({
 	menuPosition = "bottom",
 	flipLableVertical = false,
 	flipLableHorizontal = false,
-	clickOpen = true
+	clickOpenClose = true
 }: NavigationProps) => {
 	const classes = useStyles({ primaryColor: buttonColor });
 
 	const [open, setOpen] = useState(false);
 
 	const onClick = () => setOpen(!open);
-	const onClickAway = () => setOpen(false);
+	const onClickAway = () => !clickOpenClose && setOpen(false);
 
 	return (
 		<div
 			id="navigation-menu"
-			// className={classes.root}
-			onMouseEnter={!clickOpen ? onClick : undefined}
-			onMouseLeave={!clickOpen ? onClickAway : undefined}
+			onMouseEnter={!clickOpenClose ? onClick : undefined}
+			onMouseLeave={!clickOpenClose ? onClickAway : undefined}
 		>
-			{clickOpen && <Backdrop open={open} />}
+			{clickOpenClose && <Backdrop open={open} />}
 			<ClickAwayListener onClickAway={onClickAway}>
 				<div>
 					<Button
@@ -246,7 +247,13 @@ const Navigation = ({
 						})}
 						id="cn-wrapper"
 						style={{
-							transform: open ? "scale(1) " : "scale(0)"
+							transform: open
+								? `scale(1) rotate(${
+										menuItems.length === 3 && menuPosition === "center"
+											? -30
+											: 0
+								  }deg)`
+								: "scale(0)"
 						}}
 					>
 						<ul style={{ margin: 0, padding: 0 }}>
