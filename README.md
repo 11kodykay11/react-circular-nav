@@ -19,9 +19,9 @@ import MyComponent from 'react-circular-nav'
 import 'react-circular-nav/dist/index.css'
 
 class Example extends Component {
-  render() {
-    return <MyComponent />
-  }
+	render() {
+		return <MyComponent />
+	}
 }
 ```
 
