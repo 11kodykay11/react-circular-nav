@@ -19,8 +19,6 @@ import { ChromePicker } from "react-color";
 
 const useStyles = makeStyles({
 	card: {
-		// width: "50%",
-		// height: "50%",
 		display: "inline-block",
 		flex: "1 1 auto",
 		position: "absolute",
@@ -28,9 +26,20 @@ const useStyles = makeStyles({
 		left: "50%",
 		transformOrigin: "center",
 		transform: "translate(-50%, -50%)",
-		padding: 10,
-		backgroundColor: "#93ccff",
+		padding: 20,
+		backgroundColor: "rgba(255, 255, 255, 0.2)",
 		overflow: "visible"
+	},
+	backgroundText: {
+		position: "absolute",
+		top: "10%",
+		transform: "translate(25%, -50%)",
+		zIndex: -1,
+		overflow: "hidden",
+		fontSize: "10em",
+		background: "-webkit-linear-gradient(360deg, #8b49ff, #ffca57)",
+		"-webkit-background-clip": "text",
+		"-webkit-text-fill-color": "transparent"
 	}
 });
 
@@ -107,8 +116,8 @@ const App = () => {
 	const [flipHorizontal, setFlipHorizontal] = useState(false);
 	const [flipVertical, setFlipVertical] = useState(false);
 	const [position, setPosition] = useState<MenuPosition>("bottom");
-	const [buttonColor, setButtonColor] = useState("#9219CA");
-	const [menuColor, setMenuColor] = useState("orange");
+	const [buttonColor, setButtonColor] = useState("#8b49ff");
+	const [menuColor, setMenuColor] = useState("#ffca57");
 
 	const onPositionSelected = (e: any) => {
 		setPosition(e.target.value);
@@ -116,6 +125,7 @@ const App = () => {
 
 	return (
 		<Fragment>
+			<div className={classes.backgroundText}>react-circular-nav</div>
 			<Card className={classes.card} style={position === "center" ? { left: "11%" } : {}}>
 				<Grid container direction="row">
 					<Grid item direction="column">
