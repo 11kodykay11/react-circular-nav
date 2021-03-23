@@ -1,13 +1,5 @@
-import React, { useState, useCallback, Fragment } from "react";
-// import {
-//   green,
-//   red,
-//   indigo,
-//   orange,
-//   yellow,
-//   grey
-// } from '@material-ui/core/colors'
-import { ClickAwayListener, Backdrop, makeStyles, Button } from "@material-ui/core";
+import React, { useState } from "react";
+import { makeStyles } from "@material-ui/styles";
 import clsx from "clsx";
 
 const primaryColor = () => (props: any) => props.primaryColor;
@@ -214,90 +206,82 @@ const Navigation = ({
 			onMouseEnter={!clickOpenClose ? onClick : undefined}
 			onMouseLeave={!clickOpenClose ? onClickAway : undefined}
 		>
-			{clickOpenClose && <Backdrop open={open} />}
-			<ClickAwayListener onClickAway={onClickAway}>
-				<div>
-					<Button
-						className={clsx(classes.button, {
-							[classes.buttonTop]: menuPosition === "top",
-							[classes.buttonBottom]: menuPosition === "bottom",
-							[classes.buttonRight]: menuPosition === "right",
-							[classes.buttonLeft]: menuPosition === "left",
-							[classes.buttonCenter]: menuPosition === "center"
+			<div>
+				<button
+					className={clsx(classes.button, {
+						[classes.buttonTop]: menuPosition === "top",
+						[classes.buttonBottom]: menuPosition === "bottom",
+						[classes.buttonRight]: menuPosition === "right",
+						[classes.buttonLeft]: menuPosition === "left",
+						[classes.buttonCenter]: menuPosition === "center"
+					})}
+					id="cn-button"
+					onClick={onClick}
+				>
+					+
+				</button>
+				<div
+					className={clsx(classes.wrapper, {
+						[classes.wVertCenter]:
+							menuPosition === "center" ||
+							menuPosition === "right" ||
+							menuPosition === "left",
+						[classes.wHoriCenter]:
+							menuPosition === "center" ||
+							menuPosition === "top" ||
+							menuPosition === "bottom",
+						[classes.wRight]: menuPosition === "right",
+						[classes.wLeft]: menuPosition === "left",
+						[classes.wTop]: menuPosition === "top",
+						[classes.wBottom]: menuPosition === "bottom"
+					})}
+					id="cn-wrapper"
+					style={{
+						transform: open
+							? `scale(1) rotate(${
+									menuItems.length === 3 && menuPosition === "center" ? -30 : 0
+							  }deg)`
+							: "scale(0)"
+					}}
+				>
+					<ul style={{ margin: 0, padding: 0 }}>
+						{menuItems.map((item, index) => {
+							const cAngle = centerAngle(menuPosition === "center", menuItems.length);
+							let rotationAngle = index * cAngle + getPositionAngle(menuPosition);
+							let skewAngle = 90 - cAngle;
+							let itemRotationAngle = cAngle / 2;
+							return (
+								<StyledMenuItem
+									key={`li-item-${index}`}
+									liStyle={
+										menuItems.length === 2
+											? {
+													transform: `rotate(${rotationAngle}deg)`,
+													transformOrigin: "50% 100%",
+													width: "20em"
+											  }
+											: menuItems.length === 3 && {
+													width: "15em",
+													transform: `translate(-33%) rotate(${rotationAngle}deg) skew(${skewAngle}deg)`
+											  }
+									}
+									spanStyle={menuItems.length === 3 && { width: "15em" }}
+									defaultColor={buttonColor}
+									menuColor={menuColor}
+									{...{
+										item,
+										rotationAngle,
+										skewAngle: menuItems.length === 2 ? 0 : skewAngle,
+										itemRotationAngle,
+										flipLableVertical,
+										flipLableHorizontal
+									}}
+								/>
+							);
 						})}
-						id="cn-button"
-						onClick={onClick}
-					>
-						+
-					</Button>
-					<div
-						className={clsx(classes.wrapper, {
-							[classes.wVertCenter]:
-								menuPosition === "center" ||
-								menuPosition === "right" ||
-								menuPosition === "left",
-							[classes.wHoriCenter]:
-								menuPosition === "center" ||
-								menuPosition === "top" ||
-								menuPosition === "bottom",
-							[classes.wRight]: menuPosition === "right",
-							[classes.wLeft]: menuPosition === "left",
-							[classes.wTop]: menuPosition === "top",
-							[classes.wBottom]: menuPosition === "bottom"
-						})}
-						id="cn-wrapper"
-						style={{
-							transform: open
-								? `scale(1) rotate(${
-										menuItems.length === 3 && menuPosition === "center"
-											? -30
-											: 0
-								  }deg)`
-								: "scale(0)"
-						}}
-					>
-						<ul style={{ margin: 0, padding: 0 }}>
-							{menuItems.map((item, index) => {
-								const cAngle = centerAngle(
-									menuPosition === "center",
-									menuItems.length
-								);
-								let rotationAngle = index * cAngle + getPositionAngle(menuPosition);
-								let skewAngle = 90 - cAngle;
-								let itemRotationAngle = cAngle / 2;
-								return (
-									<StyledMenuItem
-										key={`li-item-${index}`}
-										liStyle={
-											menuItems.length === 2
-												? {
-														transform: `rotate(${rotationAngle}deg)`,
-														transformOrigin: "50% 100%",
-														width: "20em"
-												  }
-												: menuItems.length === 3 && {
-														width: "15em",
-														transform: `translate(-33%) rotate(${rotationAngle}deg) skew(${skewAngle}deg)`
-												  }
-										}
-										spanStyle={menuItems.length === 3 && { width: "15em" }}
-										defaultColor={buttonColor}
-										menuColor={menuColor}
-										{...{
-											item,
-											rotationAngle,
-											skewAngle: menuItems.length === 2 ? 0 : skewAngle,
-											itemRotationAngle,
-											flipLableVertical,
-											flipLableHorizontal
-										}}
-									/>
-								);
-							})}
-						</ul>
-					</div>
+					</ul>
 				</div>
-			</ClickAwayListener>
+			</div>
 		</div>
 	);
 };

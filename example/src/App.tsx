@@ -13,7 +13,6 @@ import {
 } from "@material-ui/core";
 
 import Navigation from "react-circular-nav";
-import "react-circular-nav/dist/index.css";
 import { MenuPosition } from "../../dist/Navigation";
 import { ChromePicker } from "react-color";
 
@@ -33,10 +32,12 @@ const useStyles = makeStyles({
 	backgroundText: {
 		position: "absolute",
 		top: "10%",
-		transform: "translate(25%, -50%)",
+		transform: "translate(calc(50vw - 50%), -50%)",
+		transition: "all 0s",
 		zIndex: -1,
 		overflow: "hidden",
-		fontSize: "10em",
+		fontSize: "8em",
+		fontFamily: "Courier New",
 		background: "-webkit-linear-gradient(360deg, #8b49ff, #ffca57)",
 		"-webkit-background-clip": "text",
 		"-webkit-text-fill-color": "transparent"

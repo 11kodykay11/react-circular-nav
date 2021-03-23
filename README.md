@@ -13,17 +13,29 @@ npm install --save react-circular-nav
 ## Usage
 
 ```tsx
-import React, { Component } from 'react'
-
-import MyComponent from 'react-circular-nav'
-import 'react-circular-nav/dist/index.css'
+import React, { Component } from "react";
+import Navigation from "react-circular-nav";
+import "react-circular-nav/dist/index.css";
 
 class Example extends Component {
 	render() {
-		return <MyComponent />
+		return <Navigation />;
 	}
 }
 ```
+
+## Properties
+
+| Name        | Type                | Example                                |
+| ----------- | ------------------- | -------------------------------------- |
+| steps       | Array []            | ["string", 1000, "some more", 1000]    |
+| loop        | number              | 5, 10, Infinity etc.                   |
+| blinkCursor | boolean             | true (default)                         |
+| editDelay   | number              | 60 (default)                           |
+| deleteDelay | number              | 60 (default)                           |
+| style       | react native styles | `{[styles.text, {fontSize: 50}]}` etc. |
+
+---
 
 ## License
 
