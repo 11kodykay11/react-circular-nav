@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useCallback, useState } from "react";
 import {
 	FormControl,
 	FormControlLabel,
@@ -109,6 +109,8 @@ const OnOffSwitch = ({ label, checked, onChange, disabled = false }: any) => {
 	);
 };
 
+let isColorSwitched = false;
+
 const App = () => {
 	const classes = useStyles();
 
@@ -119,9 +121,27 @@ const App = () => {
 	const [buttonColor, setButtonColor] = useState("#8b49ff");
 	const [menuColor, setMenuColor] = useState("#ffca57");
 
-	const onPositionSelected = (e: any) => {
-		setPosition(e.target.value);
-	};
+	const onPositionSelected = useCallback(
+		(position: any) => {
+			setPosition(position);
+			// Switch the color back to what they were
+			if (isColorSwitched) {
+				isColorSwitched = false;
+				let t = menuColor;
+				setMenuColor(buttonColor);
+				setButtonColor(t);
+				return;
+			}
+			// Switch the color if right position is selected so that menu button is visible
+			if (position === "right") {
+				isColorSwitched = true;
+				let t = buttonColor;
+				setButtonColor(menuColor);
+				setMenuColor(t);
+			}
+		},
+		[menuColor, buttonColor, position]
+	);
 
 	return (
 		<Fragment>
@@ -147,7 +167,10 @@ const App = () => {
 						/>
 					</Grid>
 					<Grid item style={{ marginLeft: 25 }}>
-						<PositionRadio selected={position} onRadioSelect={onPositionSelected} />
+						<PositionRadio
+							selected={position}
+							onRadioSelect={(e: any) => onPositionSelected(e.target.value)}
+						/>
 						<Grid item container direction="row">
 							<ColorPicker
 								label="Button Color"
