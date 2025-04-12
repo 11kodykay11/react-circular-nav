@@ -8,9 +8,10 @@ import {
 	RadioGroup,
 	Typography,
 	Card,
-	makeStyles,
 	Switch
-} from "@material-ui/core";
+} from "@mui/material";
+
+import {makeStyles} from "@mui/styles";
 
 import Navigation from "react-circular-nav";
 import { MenuPosition } from "../../dist/Navigation";
@@ -87,14 +88,13 @@ const OnOffSwitch = ({ label, checked, onChange, disabled = false }: any) => {
 			{label}
 			<Grid
 				component="div"
-				item
 				container
 				alignItems="center"
 				spacing={1}
 				style={{ flexWrap: "nowrap" }}
 			>
-				<Grid item>Off</Grid>
-				<Grid item>
+				<Grid>Off</Grid>
+				<Grid>
 					<Switch
 						checked={checked}
 						onChange={onChange}
@@ -104,7 +104,7 @@ const OnOffSwitch = ({ label, checked, onChange, disabled = false }: any) => {
 						disabled={disabled}
 					/>
 				</Grid>
-				<Grid item>On</Grid>
+				<Grid>On</Grid>
 			</Grid>
 		</Typography>
 	);
@@ -149,7 +149,7 @@ const App = () => {
 			<div className={classes.backgroundText}>react-circular-nav</div>
 			<Card className={classes.card} style={position === "center" ? { left: "11%" } : {}}>
 				<Grid container direction="row">
-					<Grid item direction="column">
+					<Grid direction="column">
 						<OnOffSwitch
 							label="Click to Open/Close"
 							checked={clickOpen}
@@ -167,12 +167,12 @@ const App = () => {
 							onChange={() => setFlipVertical((prev) => !prev)}
 						/>
 					</Grid>
-					<Grid item style={{ marginLeft: 25 }}>
+					<Grid style={{ marginLeft: 25 }}>
 						<PositionRadio
 							selected={position}
 							onRadioSelect={(e: any) => onPositionSelected(e.target.value)}
 						/>
-						<Grid item container direction="row">
+						<Grid direction="row">
 							<ColorPicker
 								label="Button Color"
 								color={buttonColor}
