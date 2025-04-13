@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import { makeStyles } from "@mui/styles";
 import clsx from "clsx";
+import { Box, Button } from "@mui/material";
 
-const primaryColor = () => (props: any) => props.primaryColor;
-const secondaryColor = () => (props: any) => props.secondaryColor;
-const hoverColor = () => (props: any) => props.hoverColor || props.primaryColor;
-const centerAngle = (isFullCircle, itemCount) => (isFullCircle ? 360 : 180) / itemCount;
-const getPositionAngle = (p) => (p === "right" ? -90 : p === "left" ? 90 : p === "top" ? -180 : 0);
+const primaryColor = (props: any) => props.primaryColor;
+const secondaryColor = (props: any) => props.secondaryColor;
+const hoverColor = (props: any) => props.hoverColor || props.primaryColor;
+const centerAngle = (isFullCircle: boolean, itemCount: number) => (isFullCircle ? 360 : 180) / itemCount;
+const getPositionAngle = (p: string) => (p === "right" ? -90 : p === "left" ? 90 : p === "top" ? -180 : 0);
 
-const useStyles = makeStyles({
+const useStyles = (props: any) => ({
 	root: {
 		position: "absolute",
 		width: "100vw",
@@ -24,7 +24,7 @@ const useStyles = makeStyles({
 		fontSize: "1.5em",
 		height: "5em",
 		width: "5em",
-		backgroundColor: primaryColor(),
+		backgroundColor: primaryColor(props),
 		position: "fixed",
 		borderRadius: "50%",
 		cursor: "pointer",
@@ -69,9 +69,9 @@ const useStyles = makeStyles({
 		overflow: "hidden",
 		transition: "border .3s ease, background-color .3s ease",
 		display: "block",
-		backgroundColor: secondaryColor(),
+		backgroundColor: secondaryColor(props),
 		"&:hover": {
-			backgroundColor: hoverColor()
+			backgroundColor: hoverColor(props)
 		}
 	},
 	wrapper: {
@@ -154,34 +154,33 @@ const StyledMenuItem = ({
 		? defaultColor
 		: (item.activeColor && item.activeColor) || defaultColor;
 	const menuBackColor = isString ? menuColor : (item.color && item.color) || menuColor;
-	const classes = useStyles({ secondaryColor: menuBackColor, primaryColor: activeColor });
+	const sx = useStyles({ secondaryColor: menuBackColor, primaryColor: activeColor });
 	return (
-		<li
-			className={classes.li}
-			style={...{
-				transform: `rotate(${rotationAngle}deg) skew(${skewAngle}deg)`,
-				...liStyle
-			}}
-		>
+		<li style={{
+			...sx.li,
+			transform: `rotate(${rotationAngle}deg) skew(${skewAngle}deg)`,
+			...liStyle
+		}}>
 			<div
-				className={classes.anchor}
-				style={...{
+				style={{
+					...sx.anchor,
 					transform: `skew(${-skewAngle}deg) rotate(${itemRotationAngle}deg) translate(10%, 50%)`,
 					...spanStyle
 				}}
 				onClick={!isString && item.onClick ? item.onClick : null}
 			>
 				<span
-					className={clsx(classes.span, {
-						[classes.spanFlipVertical]: flipLableVertical,
-						[classes.spanFlipHorizontal]: flipLableHorizontal
-					})}
+					style={{
+						...sx.span,
+						...(flipLableHorizontal && sx.spanFlipHorizontal),
+						...(flipLableVertical && sx.spanFlipVertical)
+					}}
 				>
 					{!isString ? (item.icon ? item.icon : item.label) : item}
 				</span>
 			</div>
 		</li>
-	);
+	)
 };
 
 const Navigation = ({
@@ -193,7 +192,7 @@ const Navigation = ({
 	flipLableHorizontal = false,
 	clickOpenClose = true
 }: NavigationProps) => {
-	const classes = useStyles({ primaryColor: buttonColor });
+	const sx = useStyles({ primaryColor: buttonColor, secondaryColor: menuColor });
 
 	const [open, setOpen] = useState(false);
 
@@ -207,42 +206,36 @@ const Navigation = ({
 			onMouseLeave={!clickOpenClose ? onClickAway : undefined}
 		>
 			<div>
-				<button
-					className={clsx(classes.button, {
-						[classes.buttonTop]: menuPosition === "top",
-						[classes.buttonBottom]: menuPosition === "bottom",
-						[classes.buttonRight]: menuPosition === "right",
-						[classes.buttonLeft]: menuPosition === "left",
-						[classes.buttonCenter]: menuPosition === "center"
-					})}
+				<Button
+					sx={{
+						...sx.button,
+						...(menuPosition === "top" && sx.buttonTop),
+						...(menuPosition === "bottom" && sx.buttonBottom),
+						...(menuPosition === "right" && sx.buttonRight),
+						...(menuPosition === "left" && sx.buttonLeft),
+						...(menuPosition === "center" && sx.buttonCenter)
+					}}
 					id="cn-button"
 					onClick={onClick}
 				>
 					+
-				</button>
-				<div
-					className={clsx(classes.wrapper, {
-						[classes.wVertCenter]:
-							menuPosition === "center" ||
-							menuPosition === "right" ||
-							menuPosition === "left",
-						[classes.wHoriCenter]:
-							menuPosition === "center" ||
-							menuPosition === "top" ||
-							menuPosition === "bottom",
-						[classes.wRight]: menuPosition === "right",
-						[classes.wLeft]: menuPosition === "left",
-						[classes.wTop]: menuPosition === "top",
-						[classes.wBottom]: menuPosition === "bottom"
-					})}
-					id="cn-wrapper"
-					style={{
+				</Button>
+				<Box
+					sx={{
+						...sx.wrapper,
+						...((menuPosition === "center" || menuPosition === "right" || menuPosition === "left") && sx.wVertCenter),
+						...((menuPosition === "center" || menuPosition === "top" || menuPosition === "bottom") && sx.wHoriCenter),
+						...(menuPosition === "right" && sx.wRight),
+						...(menuPosition === "left" && sx.wLeft),
+						...(menuPosition === "top" && sx.wTop),
+						...(menuPosition === "bottom" && sx.wBottom),
 						transform: open
-							? `scale(1) rotate(${
-									menuItems.length === 3 && menuPosition === "center" ? -30 : 0
-							  }deg)`
-							: "scale(0)"
-					}}
+								? `scale(1) rotate(${
+										menuItems.length === 3 && menuPosition === "center" ? -30 : 0
+								  }deg)`
+								: "scale(0)"
+						}}
+					id="cn-wrapper"
 				>
 					<ul style={{ margin: 0, padding: 0 }}>
 						{menuItems.map((item, index) => {
@@ -280,7 +273,7 @@ const Navigation = ({
 							);
 						})}
 					</ul>
-				</div>
+				</Box>
 			</div>
 		</div>
 	);

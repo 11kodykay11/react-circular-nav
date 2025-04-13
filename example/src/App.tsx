@@ -8,16 +8,17 @@ import {
 	RadioGroup,
 	Typography,
 	Card,
-	Switch
+	Switch,
+	Box
 } from "@mui/material";
 
-import {makeStyles} from "@mui/styles";
+// import {makeStyles} from "@mui/material/styles";
 
 import Navigation from "react-circular-nav";
 import { MenuPosition } from "../../dist/Navigation";
 import { ChromePicker } from "react-color";
 
-const useStyles = makeStyles({
+const useStyles = () => ({
 	card: {
 		display: "inline-block",
 		flex: "1 1 auto",
@@ -26,7 +27,7 @@ const useStyles = makeStyles({
 		left: "50%",
 		transformOrigin: "center",
 		transform: "translate(-50%, -50%)",
-		padding: 20,
+		padding: 2,
 		backgroundColor: "rgba(255, 255, 255, 0.2)",
 		overflow: "visible"
 	},
@@ -113,7 +114,7 @@ const OnOffSwitch = ({ label, checked, onChange, disabled = false }: any) => {
 let isColorSwitched = false;
 
 const App = () => {
-	const classes = useStyles();
+	const sx = useStyles();
 
 	const [clickOpen, setClickOpen] = useState(false);
 	const [flipHorizontal, setFlipHorizontal] = useState(false);
@@ -146,8 +147,8 @@ const App = () => {
 
 	return (
 		<Fragment>
-			<div className={classes.backgroundText}>react-circular-nav</div>
-			<Card className={classes.card} style={position === "center" ? { left: "11%" } : {}}>
+			<Box sx={sx.backgroundText}>react-circular-nav</Box>
+			<Card sx={sx.card} style={position === "center" ? { left: "11%" } : {}}>
 				<Grid container direction="row">
 					<Grid direction="column">
 						<OnOffSwitch
