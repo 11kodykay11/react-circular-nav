@@ -8,6 +8,9 @@ const hoverColor = (props: any) => props.hoverColor || props.primaryColor;
 const centerAngle = (isFullCircle: boolean, itemCount: number) => (isFullCircle ? 360 : 180) / itemCount;
 const getPositionAngle = (p: string) => (p === "right" ? -90 : p === "left" ? 90 : p === "top" ? -180 : 0);
 
+const outerRadius = 200;
+const innerRadius = 100;
+
 const useStyles = (props: any) => ({
 	root: {
 		position: "absolute",
@@ -22,8 +25,8 @@ const useStyles = (props: any) => ({
 		color: "white",
 		textAlign: "center",
 		fontSize: "1.5em",
-		height: "5em",
-		width: "5em",
+		height: innerRadius,
+		width: innerRadius,
 		backgroundColor: primaryColor(props),
 		position: "fixed",
 		borderRadius: "50%",
@@ -58,8 +61,8 @@ const useStyles = (props: any) => ({
 	buttonCenter: {
 		left: "50%",
 		top: "50%",
-		marginLeft: "-2.5em",
-		marginTop: "-2.5em"
+		transformOrigin: "center",
+		transform: "translate(-50%, -50%)",
 	},
 	li: {
 		position: "absolute",

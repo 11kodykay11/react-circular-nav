@@ -50,13 +50,16 @@
 		"@emotion/react": "latest",
 		"@emotion/styled": "latest",
 		"@mui/material": "latest",
+		"@types/d3-shape": "^3.1.7",
 		"@types/react": "latest",
 		"@types/react-dom": "latest",
+		"clsx": "^2.1.1",
+		"d3-shape": "^3.2.0",
+		"gsap": "^3.12.7",
 		"react": "latest",
 		"react-dom": "latest",
 		"react-scripts": "latest",
-		"typescript": "latest",
-		"clsx": "^2.1.1"
+		"typescript": "latest"
 	},
 	"packageManager": "pnpm@9.15.1+sha512.1acb565e6193efbebda772702950469150cf12bcc764262e7587e71d19dc98a423dff9536e57ea44c49bdf790ff694e83c27be5faa23d67e0c033b583be4bfcf"
 }

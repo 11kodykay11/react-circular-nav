@@ -1394,6 +1394,12 @@ packages:
   '@types/connect@3.4.38':
     resolution: {integrity: sha512-K6uROf1LD88uDQqJCktA4yzL1YYAK6NgfsI0v/mTgyPKWsX1CnJ0XPSDhViejru1GcRkLWb8RlzFYJRqGUbaug==}
 
+  '@types/d3-path@3.1.1':
+    resolution: {integrity: sha512-VMZBYyQvbGmWyWVea0EHs/BwLgxc+MKi1zLDCONksozI4YJMcTt8ZEuIR4Sb1MMTE8MMW49v0IwI5+b7RmfWlg==}
+
+  '@types/d3-shape@3.1.7':
+    resolution: {integrity: sha512-VLvUQ33C+3J+8p+Daf+nYSOsjB4GXp19/S/aGo60m9h1v6XaxjiT82lKVWJCfzhtuZ3yD7i/TPeC/fuKLLOSmg==}
+
   '@types/eslint-scope@3.7.7':
     resolution: {integrity: sha512-MzMFlSLBqNF2gcHWO0G1vP/YQyfvrxZ0bF+u7mzUdZ1/xK4A4sru+nraZz5i3iEIk1l1uyicaDVTB4QbbEkAYg==}
 
@@ -2388,6 +2394,14 @@ packages:
 
   csstype@3.1.3:
     resolution: {integrity: sha512-M1uQkMl8rQK/szD0LNhtqxIPLpimGm8sOBwU7lLnCpSbTyY3yeU1Vc7l4KT5zT4s/yOxHH5O7tIuuLOCnLADRw==}
+
+  d3-path@3.1.0:
+    resolution: {integrity: sha512-p3KP5HCf/bvjBSSKuXid6Zqijx7wIfNW+J/maPs+iwR35at5JCbLUT0LzF1cnjbCHWhqzQTIN2Jpe8pRebIEFQ==}
+    engines: {node: '>=12'}
+
+  d3-shape@3.2.0:
+    resolution: {integrity: sha512-SaLBuwGm3MOViRq2ABk3eLoxwZELpH6zhl3FbAoJ7Vm1gofKx6El1Ib5z23NUEhF9AsGl7y+dzLe5Cw2AArGTA==}
+    engines: {node: '>=12'}
 
   damerau-levenshtein@1.0.8:
     resolution: {integrity: sha512-sdQSFB7+llfUcQHUQO3+B8ERRj0Oa4w9POWMI/puGtuf7gFywGmkaLCElnudfTiKZV+NvHqL0ifzdrI8Ro7ESA==}
@@ -7665,6 +7679,12 @@ snapshots:
     dependencies:
       '@types/node': 12.20.55
 
+  '@types/d3-path@3.1.1': {}
+
+  '@types/d3-shape@3.1.7':
+    dependencies:
+      '@types/d3-path': 3.1.1
+
   '@types/eslint-scope@3.7.7':
     dependencies:
       '@types/eslint': 9.6.1
@@ -8804,6 +8824,12 @@ snapshots:
       cssom: 0.3.8
 
   csstype@3.1.3: {}
+
+  d3-path@3.1.0: {}
+
+  d3-shape@3.2.0:
+    dependencies:
+      d3-path: 3.1.0
 
   damerau-levenshtein@1.0.8: {}
 
@@ -11595,9 +11621,11 @@ snapshots:
       '@emotion/react': 11.14.0(@types/react@file:../node_modules/@types/react)(react@file:../node_modules/react)
       '@emotion/styled': 11.14.0(@emotion/react@file:../node_modules/@emotion/react(@types/react@file:../node_modules/@types/react)(react@file:../node_modules/react))(@types/react@file:../node_modules/@types/react)(react@file:../node_modules/react)
       '@mui/material': 7.0.2(@emotion/react@file:../node_modules/@emotion/react(@types/react@file:../node_modules/@types/react)(react@file:../node_modules/react))(@emotion/styled@file:../node_modules/@emotion/styled(@emotion/react@file:../node_modules/@emotion/react(@types/react@file:../node_modules/@types/react)(react@file:../node_modules/react))(@types/react@file:../node_modules/@types/react)(react@file:../node_modules/react))(@types/react@file:../node_modules/@types/react)(react-dom@file:../node_modules/react-dom(react@file:../node_modules/react))(react@file:../node_modules/react)
+      '@types/d3-shape': 3.1.7
       '@types/react': 19.1.1
       '@types/react-dom': 19.1.2(@types/react@file:../node_modules/@types/react)
       clsx: 2.1.1
+      d3-shape: 3.2.0
       react: file:../node_modules/react
       react-dom: 19.1.0(react@file:../node_modules/react)
       react-scripts: 5.0.1(@babel/plugin-syntax-flow@7.26.0(@babel/core@7.26.10))(@babel/plugin-transform-react-jsx@7.25.9(@babel/core@7.26.10))(@types/babel__core@7.20.5)(eslint@6.8.0)(react@file:../node_modules/react)(rework-visit@1.0.0)(rework@1.0.1)(sockjs-client@1.4.0)(type-fest@0.21.3)(typescript@file:../node_modules/typescript)
